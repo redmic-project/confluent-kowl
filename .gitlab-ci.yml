@@ -1,0 +1,13 @@
+include:
+  - project: 'redmic-project/gitlab-ci-templates'
+    ref: master
+    file: '/deployment.yml'
+
+stages:
+  - deploy
+
+.deploy:
+  variables:
+    STACK: confluent
+  environment:
+    url: https://${CI_PROJECT_NAME}.${PUBLIC_HOSTNAME}
