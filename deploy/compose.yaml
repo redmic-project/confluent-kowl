@@ -1,5 +1,3 @@
-version: '3.5'
-
 services:
   kowl:
     image: ${IMAGE_NAME:-quay.io/cloudhut/kowl}:${IMAGE_TAG:-master}
