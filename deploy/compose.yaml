@@ -9,9 +9,16 @@ services:
       CONNECT_ENABLED:
       CONNECT_CLUSTERS_NAME:
       CONNECT_CLUSTERS_URL:
+      ANALYTICS_ENABLED:
     networks:
       kafka-net:
       traefik-net:
+    healthcheck:
+      test: curl -s -o /dev/null http://localhost:${SERVER_LISTENPORT}
+      interval: ${HEALTHCHECK_INTERVAL:-30s}
+      timeout: ${HEALTHCHECK_TIMEOUT:-10s}
+      retries: ${HEALTHCHECK_RETRIES:-5}
+      start_period: ${HEALTHCHECK_START_PERIOD:-1m}
     deploy:
       mode: replicated
       replicas: ${REPLICAS:-1}
