@@ -1,6 +1,6 @@
 services:
   kowl:
-    image: ${IMAGE_NAME:-quay.io/cloudhut/kowl}:${IMAGE_TAG:-master}
+    image: ${IMAGE_NAME:-docker.redpanda.com/redpandadata/console}:${IMAGE_TAG:-latest}
     environment:
       SERVER_LISTENPORT:
       KAFKA_BROKERS:
