@@ -20,17 +20,19 @@ services:
       update_config:
         delay: ${UPDATE_DELAY:-30s}
       labels:
-        traefik.frontend.auth.basic.users: ${UI_AUTH}
-        traefik.frontend.rule: Host:${TRAEFIK_SUBDOMAIN:-kowl}.${PUBLIC_HOSTNAME}
-        traefik.backend: kowl
-        traefik.port: '${SERVER_LISTENPORT}'
+        traefik.enable: ${TRAEFIK_ENABLE:-true}
+        traefik.http.routers.kowl.entrypoints: ${TRAEFIK_ENTRYPOINT:-http}
+        traefik.http.routers.kowl.rule: Host(`${TRAEFIK_SUBDOMAIN:-kowl}.${PUBLIC_HOSTNAME}`)
+        traefik.http.middlewares.kowl-auth.basicauth.users: ${TRAEFIK_AUTH}
+        traefik.http.routers.kowl.middlewares: kowl-auth
+        traefik.http.services.kowl.loadbalancer.server.port: ${SERVER_LISTENPORT}
       resources:
         limits:
-          cpus: '${RESOURCES_LIMITS_CPUS:-0.1}'
-          memory: ${RESOURCES_LIMITS_MEMORY:-64M}
+          cpus: '${RESOURCES_LIMITS_CPUS:-0.5}'
+          memory: ${RESOURCES_LIMITS_MEMORY:-128M}
         reservations:
           cpus: '${RESOURCES_RESERVATIONS_CPUS:-0.001}'
-          memory: ${RESOURCES_RESERVATIONS_MEMORY:-16M}
+          memory: ${RESOURCES_RESERVATIONS_MEMORY:-32M}
 
 networks:
   kafka-net:
